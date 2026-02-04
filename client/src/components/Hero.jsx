@@ -1,36 +1,156 @@
-import React from 'react'
-import { assets } from '../assets/assets'
-import { ArrowRight, CalendarIcon, ClockIcon } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useRef } from "react";
+import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import gsap from "gsap";
 
 const Hero = () => {
-    const navigate = useNavigate()
+    const titleRef = useRef([]);
+    const subtitleRef = useRef(null);
+    const ctaRef = useRef(null);
+    const bgVideoRef = useRef(null);
+    const lightRef = useRef(null);
+    const heroContentRef = useRef(null);
+
+    // Mouse tracking
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    // Parallax rotation
+    const rotateX = useTransform(mouseY, [0, window.innerHeight], [15, -15]);
+    const rotateY = useTransform(mouseX, [0, window.innerWidth], [-15, 15]);
+    const springX = useSpring(rotateX, { stiffness: 100, damping: 15 });
+    const springY = useSpring(rotateY, { stiffness: 100, damping: 15 });
+
+    // Light follows cursor
+    const lightX = useTransform(mouseX, [0, window.innerWidth], ["-10%", "10%"]);
+    const lightY = useTransform(mouseY, [0, window.innerHeight], ["-5%", "5%"]);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+            // Title cinematic fade-in
+            tl.from(titleRef.current, {
+                opacity: 0,
+                y: 80,
+                scale: 1.15,
+                filter: "blur(6px)",
+                duration: 1.8,
+                stagger: 0.25,
+            });
+
+            // Subtitle appears softly
+            tl.from(
+                subtitleRef.current,
+                {
+                    opacity: 0,
+                    y: 40,
+                    duration: 1.2,
+                    ease: "power2.out",
+                },
+                "-=0.6"
+            );
+
+            // CTA reveal with pulse
+            tl.from(
+                ctaRef.current,
+                {
+                    opacity: 0,
+                    scale: 0.85,
+                    duration: 0.8,
+                    ease: "back.out(1.8)",
+                    boxShadow: "0 0 0 rgba(255,0,0,0)",
+                },
+                "-=0.3"
+            ).to(ctaRef.current, {
+                boxShadow: "0 0 50px rgba(255,0,0,0.45)",
+                repeat: -1,
+                yoyo: true,
+                duration: 2.5,
+                ease: "sine.inOut",
+            });
+        });
+
+        const handleMouseMove = (e) => {
+            mouseX.set(e.clientX);
+            mouseY.set(e.clientY);
+        };
+
+        window.addEventListener("mousemove", handleMouseMove);
+        return () => {
+            ctx.revert();
+            window.removeEventListener("mousemove", handleMouseMove);
+        };
+    }, [mouseX, mouseY, springX, springY]);
+
     return (
-        <div className='flex flex-col items-start justify-center gap-4 px-6 md:px-16 lg:px-36 bg-[url("/backgroundImage.png")] bg-cover bg-center h-screen'>
-            <img src={assets.marvelLogo} alt="" className='max-h-11 lg:h-11 mt-20' />
-            <h1 className='text-5xl md:text-[70px] md:leading-18 font-semibold max-w-110'>Guardians <br /> of the Galaxy</h1>
+        <section className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-black perspective-[1200px]">
+            {/* Background video */}
+            <motion.video
+                ref={bgVideoRef}
+                src="/inamaticBackground.mp4"
+                autoPlay
+                muted
+                loop
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{
+                    rotateX: springX,
+                    rotateY: springY,
+                    filter:
+                        "contrast(1.25) brightness(0.85) saturate(1.1) sepia(0.05) blur(0.3px)",
+                    transformOrigin: "center",
+                }}
+            />
 
-            <div className='flex items-center gap-4 text-gray-300'>
-                <span>Action | Adventure | Sci-Fi</span>
-                <div className='flex items-center gap-1'>
-                    <CalendarIcon className='w-4.5 h-4.5' />2018
-                </div>
+            {/* Light overlay that moves with cursor */}
+            <motion.div
+                ref={lightRef}
+                className="absolute inset-0 pointer-events-none mix-blend-overlay"
+                style={{
+                    background:
+                        "radial-gradient(circle at center, rgba(255,255,255,0.25) 0%, transparent 60%)",
+                    x: lightX,
+                    y: lightY,
+                    rotateX: springX,
+                    rotateY: springY,
+                }}
+            />
 
-                <div className='flex items-center gap-1'>
-                    <ClockIcon className='w-4.5 h-4.5' />2h 8m
-                </div>
-            </div>
-            <p className='max-w-md text-gray-300'>
-                In a post-apocalytic world where cities ride on wheel and consume each
-                other to survive, two people meet in London and try to stop a conspiracy.
-            </p>
+            {/* Cinematic vignette */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_60%,rgba(0,0,0,0.9)_100%)] pointer-events-none" />
 
-            <button onClick={() => navigate('/movies')} className='flex items-center gap-1 px-6 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-full font-medium cursor-pointer'>
-                Explore Movies
-                <ArrowRight className='w-5 h-5' />
-            </button>
-        </div>
-    )
-}
+            {/* Hero content */}
+            <motion.div
+                ref={heroContentRef}
+                className="relative z-10 text-center px-6"
+                style={{
+                    rotateX: springX,
+                    rotateY: springY,
+                    transformStyle: "preserve-3d",
+                }}
+            >
+                {/* Title */}
+                <motion.h1
+                    className="text-4xl md:text-6xl font-extrabold tracking-wide text-white leading-tight"
+                    style={{
+                        textShadow:
+                            "0 0 40px rgba(255,255,255,0.45), 0 0 70px rgba(255,255,255,0.25)",
+                        transform: "translateZ(80px)",
+                    }}
+                >
+                    <span ref={(el) => (titleRef.current[0] = el)} className="block uppercase">
+                        Popcorn
+                    </span>
+                    <span ref={(el) => (titleRef.current[1] = el)} className="block uppercase">
+                        Seats
+                    </span>
+                    <span ref={(el) => (titleRef.current[2] = el)} className="block uppercase text-white">
+                        Action!
+                    </span>
+                </motion.h1>
 
-export default Hero
+            </motion.div>
+        </section>
+    );
+};
+
+export default Hero;

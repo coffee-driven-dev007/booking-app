@@ -1,4 +1,4 @@
-import logo from './logo.svg'
+import logo from './logo.png'
 import marvelLogo from './marvelLogo.svg'
 import googlePlay from './googlePlay.svg'
 import appStore from './appStore.svg'
@@ -327,7 +327,7 @@ export const dummyBookingData = [
             showPrice: 59,
         },
         "amount": 147,
-        "bookedSeats": ["A1", "A2","A3"],
+        "bookedSeats": ["A1", "A2", "A3"],
         "isPaid": true,
     },
 ]
