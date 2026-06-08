@@ -1,289 +1,525 @@
-# 🎬 Popcorn Palace – Movie Ticket Booking Platform
+# 🎬 Popcorn Palace
 
-A full-stack movie ticket booking platform built with the MERN stack that enables users to browse movies, select seats in real time, purchase tickets securely, and receive automated booking notifications.
+<p align="center">
+  <img src="./banner.png" width="100%" alt="Popcorn Palace Banner"/>
+</p>
 
-The platform combines secure authentication, payment processing, event-driven workflows, and administrative management tools to deliver a production-style booking experience.
+<h3 align="center">
+Production-Style Movie Ticket Booking Platform
+</h3>
 
-## 🌐 Live Demo
+<p align="center">
+A full-stack booking platform built with React, Node.js, Express, MongoDB, Stripe, Clerk, and Inngest.
+</p>
 
-Frontend: https://booking-app-five-mu.vercel.app
+<p align="center">
 
-## 📸 Screenshots
+<a href="https://booking-app-five-mu.vercel.app">
+<img src="https://img.shields.io/badge/Live_Demo-Visit-success?style=for-the-badge">
+</a>
 
-> Add screenshots of:
->
-> * Landing Page
-> * Movie Listings
-> * Seat Selection Interface
-> * Payment Checkout
-> * Admin Dashboard
+<img src="https://img.shields.io/badge/React-Frontend-61DAFB?style=for-the-badge">
 
----
+<img src="https://img.shields.io/badge/Node.js-Backend-339933?style=for-the-badge">
 
-## 🚀 Overview
+<img src="https://img.shields.io/badge/Stripe-Payments-635BFF?style=for-the-badge">
 
-Popcorn Palace streamlines the movie ticket booking experience by allowing users to reserve seats online while ensuring real-time seat availability and secure transactions.
+<img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge">
 
-The application is designed with scalability in mind and supports concurrent users during high-demand booking periods through event-driven background processing.
-
-This project demonstrates full-stack development, payment integration, authentication, asynchronous workflows, and scalable application architecture.
-
----
-
-## ✨ Key Features
-
-### 🎥 Movie Discovery
-
-* Browse available movies
-* View movie details and schedules
-* Explore upcoming showtimes
-
-### 🎟️ Real-Time Seat Booking
-
-* Interactive seat selection
-* Real-time seat availability updates
-* Prevents double-booking conflicts
-* Supports concurrent user activity
-
-### 💳 Secure Payments
-
-* Stripe payment integration
-* Secure checkout experience
-* Booking confirmation after successful payment
-
-### 🔐 Authentication & Authorization
-
-* User registration and login
-* Secure authentication with Clerk
-* Protected user routes
-* Admin-only management functionality
-
-### ⚡ Event-Driven Notifications
-
-* Automated booking confirmations
-* Background task processing using Inngest
-* Reliable event handling for booking workflows
-
-### 🛠️ Admin Dashboard
-
-* Manage movies
-* Create and update showtimes
-* Monitor bookings
-* Manage platform content
+</p>
 
 ---
 
-## 🏗️ Tech Stack
+# 📑 Table of Contents
 
-### Frontend
-
-* React
-* React Router
-* Axios
-* CSS
-
-### Backend
-
-* Node.js
-* Express.js
-
-### Database
-
-* MongoDB
-* Mongoose
-
-### Authentication
-
-* Clerk
-
-### Payments
-
-* Stripe
-
-### Event Processing
-
-* Inngest
-
-### Deployment
-
-* Vercel
+- [Live Demo](#-live-demo)
+- [Overview](#-overview)
+- [Why I Built This](#-why-i-built-this)
+- [Features](#-features)
+- [Technology Stack](#-technology-stack)
+- [Application Preview](#-application-preview)
+- [System Architecture](#-system-architecture)
+- [Booking Workflow](#-booking-workflow)
+- [Engineering Decisions](#-engineering-decisions)
+- [Concurrency Handling](#-concurrency-handling)
+- [Testing](#-testing)
+- [Project Structure](#-project-structure)
+- [Installation](#-installation)
+- [Environment Variables](#-environment-variables)
+- [Running Locally](#-running-locally)
+- [Engineering Challenges](#-engineering-challenges)
+- [Lessons Learned](#-lessons-learned)
+- [Future Improvements](#-future-improvements)
 
 ---
 
-## 🧩 System Architecture
+# 🚀 Live Demo
 
-User
-↓
-React Frontend
-↓
-Express API
-↓
-MongoDB Database
+### 🌐 Frontend
 
-Authentication
-↓
-Clerk
-
-Payments
-↓
-Stripe
-
-Booking Events
-↓
-Inngest Workflows
-↓
-Notifications & Booking Updates
+https://booking-app-five-mu.vercel.app
 
 ---
 
-## 🔄 Application Workflow
+# 📖 Overview
 
-### Booking Process
+Popcorn Palace is a production-style movie ticket booking platform designed to simulate the challenges of building a real-world reservation system.
 
-1. User signs in using Clerk Authentication
-2. User selects a movie and showtime
-3. Available seats are displayed
-4. User chooses seats
-5. Payment is processed through Stripe
-6. Booking is confirmed
-7. Inngest triggers background events
-8. User receives confirmation notification
+The application allows users to browse movies, select seats, complete secure payments, and receive booking confirmations while maintaining consistent seat availability across concurrent users.
 
-### Admin Management
-
-1. Admin accesses dashboard
-2. Movies and showtimes are created
-3. Booking activity is monitored
-4. Platform data is managed securely
+Rather than focusing solely on CRUD operations, this project explores backend engineering concepts such as concurrency control, payment workflows, authentication, asynchronous event processing, and scalable application architecture.
 
 ---
 
-## 🧠 Technical Challenges Solved
+# 🎯 Why I Built This
 
-### Concurrent Seat Booking
+Movie booking platforms introduce several engineering challenges beyond displaying data on a screen.
 
-Implemented mechanisms to ensure seats remain available and prevent booking conflicts when multiple users attempt to reserve the same seats.
+I wanted to build a system capable of handling situations such as:
 
-### Payment Integration
+- Multiple users selecting the same seats simultaneously
+- Secure payment processing
+- Reliable booking confirmation workflows
+- Protected administration features
+- Background event processing
 
-Integrated Stripe to provide secure payment processing and booking confirmation workflows.
-
-### Event-Driven Architecture
-
-Used Inngest to manage asynchronous tasks such as booking confirmations and notification workflows.
-
-### Authentication Security
-
-Implemented Clerk authentication with protected routes and secure user sessions.
-
-### Full-Stack Data Flow
-
-Built seamless communication between React, Express, MongoDB, Stripe, Clerk, and Inngest services.
+This project gave me practical experience designing systems that prioritize correctness, reliability, and user experience.
 
 ---
 
-## 📂 Project Structure
+# ✨ Features
 
-booking-app/
+## 🎬 Movie Discovery
+
+- Browse movies
+- View movie details
+- Explore available showtimes
+
+---
+
+## 🎟️ Seat Booking
+
+- Interactive seat selection
+- Live seat availability
+- Backend booking validation
+- Prevents duplicate reservations
+- Supports concurrent users
+
+---
+
+## 💳 Secure Payments
+
+- Stripe Checkout integration
+- Secure payment workflow
+- Booking confirmation after successful payment
+
+---
+
+## 🔐 Authentication
+
+- Clerk authentication
+- Protected routes
+- Role-based authorization
+- Secure user sessions
+
+---
+
+## ⚡ Event-Driven Workflows
+
+- Automated booking confirmation
+- Background event processing
+- Reliable asynchronous workflows using Inngest
+
+---
+
+## 🛠️ Admin Dashboard
+
+- Create movies
+- Update showtimes
+- Monitor bookings
+- Manage platform content
+
+---
+
+# ⚡ Technology Stack
+
+| Layer | Technology |
+|--------|------------|
+| Frontend | React |
+| Backend | Node.js |
+| Framework | Express.js |
+| Database | MongoDB |
+| Authentication | Clerk |
+| Payments | Stripe |
+| Background Jobs | Inngest |
+| Hosting | Vercel |
+
+---
+
+# 📸 Application Preview
+
+## 🏠 Landing Page
+
+![Landing](./banner.png)
+
+---
+
+## 🎟️ Seat Selection
+
+![Seats](./seats.png)
+
+---
+
+## 💳 Checkout
+
+![Checkout](./payment.png)
+
+---
+
+## 🛠️ Admin Dashboard
+
+![Admin](./admin.png)
+
+---
+
+# 🏗️ System Architecture
+
+```text
+                  Browser
+                      │
+                      ▼
+             React Frontend
+                      │
+═══════════════════════════════════
+             Express API
+═══════════════════════════════════
+      │            │            │
+      ▼            ▼            ▼
+ MongoDB       Stripe       Inngest
+ Database      Payments     Events
+      │                         │
+      └──────────────┬──────────┘
+                     ▼
+            Booking Confirmation
+```
+
+The backend acts as the central coordinator, validating bookings, processing payments, persisting data, and triggering asynchronous workflows while maintaining consistent booking state.
+
+---
+
+# 🔄 Booking Workflow
+
+1. User signs in using Clerk.
+2. User selects a movie and showtime.
+3. Available seats are displayed.
+4. User selects seats.
+5. Backend validates seat availability.
+6. Stripe securely processes payment.
+7. Booking is stored in MongoDB.
+8. Inngest triggers background workflows.
+9. Confirmation is delivered to the user.
+
+---
+
+# 🏛️ Engineering Decisions
+
+## Why Clerk?
+
+Authentication is delegated to Clerk to provide secure session management, user authentication, and role-based access control without implementing authentication from scratch.
+
+---
+
+## Why Stripe?
+
+Stripe provides secure payment processing, PCI compliance, and reliable checkout workflows while reducing the complexity of handling payment infrastructure.
+
+---
+
+## Why Inngest?
+
+Background tasks such as booking confirmations should not delay HTTP responses.
+
+Using Inngest allows asynchronous workflows to execute independently while keeping the application responsive.
+
+---
+
+## Why MongoDB?
+
+MongoDB's flexible document model makes it well suited for storing movies, users, bookings, and showtimes while allowing the schema to evolve as the application grows.
+
+---
+
+# 🔒 Concurrency Handling
+
+One of the most important engineering challenges in booking systems is preventing multiple users from reserving the same seat simultaneously.
+
+To maintain consistency, the backend validates seat availability before confirming each reservation.
+
+Current implementation:
+
+- Backend validation before booking confirmation
+- Prevents duplicate reservations
+- Maintains consistent booking state
+- Protects against conflicting user actions
+
+Future improvements include distributed locking and temporary seat reservations.
+
+---
+
+# 🧪 Testing
+
+The application was manually tested across multiple scenarios including:
+
+- User authentication
+- Payment processing
+- Booking workflow
+- Concurrent booking attempts
+- Admin functionality
+- Protected routes
+- Cross-browser compatibility
+- Responsive layouts
+
+---
+
+# 📡 API Overview
+
+| Method | Endpoint | Purpose |
+|---------|----------|---------|
+| GET | /movies | Retrieve movies |
+| GET | /shows | Retrieve showtimes |
+| POST | /bookings | Create booking |
+| POST | /payments | Process payment |
+| GET | /admin | Admin management |
+
+---
+
+# 🎓 Skills Demonstrated
+
+- React Development
+- Node.js
+- Express.js
+- MongoDB
+- Clerk Authentication
+- Stripe Integration
+- Inngest Workflows
+- REST API Development
+- Backend Architecture
+- Event-Driven Systems
+- Payment Processing
+- Concurrency Handling
+- Production Deployment
+- Full-Stack Development
+
+---
+
+# 📂 Project Structure
+
+```text
+booking-app
 │
 ├── client/
-│ ├── src/
-│ ├── components/
-│ ├── pages/
-│ └── services/
+│   ├── components/
+│   ├── pages/
+│   ├── hooks/
+│   ├── services/
+│   └── assets/
 │
 ├── server/
-│ ├── controllers/
-│ ├── routes/
-│ ├── models/
-│ ├── middleware/
-│ └── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── routes/
+│   ├── models/
+│   ├── config/
+│   └── services/
 │
 └── README.md
+```
 
 ---
 
-## ⚙️ Installation
+# ⚙️ Installation
 
-### Clone Repository
+## Clone Repository
 
 ```bash
 git clone https://github.com/coffee-driven-dev007/booking-app.git
 ```
 
-### Install Frontend Dependencies
+---
+
+## Navigate into the project
+
+```bash
+cd booking-app
+```
+
+---
+
+## Install Frontend
 
 ```bash
 cd client
 npm install
 ```
 
-### Install Backend Dependencies
+---
+
+## Install Backend
 
 ```bash
-cd server
+cd ../server
 npm install
 ```
 
-### Environment Variables
+---
 
-Create a `.env` file in the server directory.
+# 🔐 Environment Variables
+
+## Server
 
 ```env
 MONGO_URI=your_mongodb_connection
+
 CLERK_SECRET_KEY=your_clerk_secret
+
 STRIPE_SECRET_KEY=your_stripe_secret
+
 INNGEST_EVENT_KEY=your_inngest_key
+
 JWT_SECRET=your_secret_key
 ```
 
-### Run Backend
+---
+
+# ▶️ Running Locally
+
+## Start Backend
 
 ```bash
+cd server
 npm run dev
 ```
 
-### Run Frontend
+---
+
+## Start Frontend
 
 ```bash
+cd client
 npm start
 ```
 
 ---
 
-## 🔮 Future Improvements
+# 🚧 Engineering Challenges
 
-* Movie search and filtering
-* Email ticket delivery
-* QR code ticket validation
-* User booking history dashboard
-* Movie recommendations
-* Analytics and reporting
-* Multi-cinema support
-* Mobile application
+## Booking Consistency
+
+Designed backend validation to maintain consistent seat availability under concurrent booking attempts.
 
 ---
 
-## 📚 Lessons Learned
+## Payment Integration
 
-This project strengthened my understanding of:
-
-* Scalable MERN application architecture
-* Payment processing workflows
-* Authentication and authorization
-* Event-driven systems
-* Concurrent booking management
-* Full-stack API development
-* Production deployment practices
+Integrated Stripe to securely process transactions while ensuring bookings are only confirmed after successful payment.
 
 ---
 
-## 👨‍💻 Author
+## Event Processing
 
-James Matsheni
+Implemented asynchronous workflows with Inngest to handle booking confirmations independently from the main request cycle.
 
-Full-Stack Developer
+---
 
-Tech Stack: React • Node.js • Express • MongoDB • Stripe • Clerk • Inngest
+## Authentication
 
-Open to Software Developer and Full-Stack Developer opportunities.
+Implemented Clerk authentication with protected routes and role-based authorization for administrative features.
+
+---
+
+## Full-Stack Integration
+
+Coordinated communication between React, Express, MongoDB, Stripe, Clerk, and Inngest to deliver a cohesive booking experience.
+
+---
+
+# 💡 Lessons Learned
+
+Building this project reinforced several important software engineering principles:
+
+- Backend validation is essential when multiple users interact simultaneously.
+- Payment workflows must account for partial failures and recovery.
+- Authentication should be secure, maintainable, and delegated when appropriate.
+- Event-driven architecture improves responsiveness by moving background work out of the request lifecycle.
+- Designing reliable systems requires thinking beyond individual features.
+
+---
+
+# 🚀 Future Improvements
+
+## High Priority
+
+- Real-time seat synchronization using WebSockets
+- Temporary seat reservations
+- Booking timeout with automatic seat release
+- Booking history dashboard
+
+---
+
+## Medium Priority
+
+- QR code ticket validation
+- Email ticket delivery
+- Movie recommendations
+- Search and filtering
+
+---
+
+## Long-Term
+
+- Redis distributed locking
+- Horizontal scaling
+- Docker deployment
+- AWS cloud deployment
+- Monitoring and observability
+- Automated integration testing
+
+---
+
+# 👨‍💻 Author
+
+## James Matsheni
+
+Full-Stack Developer focused on backend systems, real-time applications, and scalable software architecture.
+
+**GitHub**
+
+https://github.com/coffee-driven-dev007
+
+**Portfolio**
+
+https://portfolio-beta-drab-76.vercel.app
+
+---
+
+# ⭐ Support
+
+If you found this project interesting, consider giving it a ⭐ on GitHub.
+
+It helps increase the visibility of the repository and supports future development.
+
+---
+
+# 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+<p align="center">
+
+Built with ❤️ by <strong>James Matsheni</strong>
+
+<strong>Building scalable backend systems, reliable payment platforms, and real-time applications with modern JavaScript technologies.</strong>
+
+</p>
